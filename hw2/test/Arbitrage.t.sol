@@ -91,65 +91,46 @@ contract Arbitrage is Test {
         vm.startPrank(arbitrager);
         uint256 tokensBefore = tokenB.balanceOf(arbitrager);
         console.log("Before Arbitrage tokenB Balance: %s", tokensBefore);
+        console.log("TokenB Balance: %s", tokensBefore);
+        /**
+         * Please add your solution below
+         */
+
+
 
         // Approve the router to spend tokenB
         tokenB.approve(address(router), tokensBefore);
-
         // Assuming we've identified a profitable path: B -> A -> D -> C -> B
-        address[] memory path = new address[](2);
+        address[] memory path = new address[](5);
 
         // Swap B -> A
         path[0] = address(tokenB);
         path[1] = address(tokenA);
-        router.swapExactTokensForTokens(tokensBefore, 0, path, address(this), block.timestamp + 120);
+        path[2] = address(tokenD);
+        path[3] = address(tokenC);
+        path[4] = address(tokenB);
+
+        router.swapExactTokensForTokens(tokensBefore, 20 ether, path, arbitrager, block.timestamp + 120);
 
         // Fetch the new balance and approve tokenA
-        uint256 tokenABalance = tokenA.balanceOf(address(this));
-        tokenA.approve(address(router), tokenABalance);
+        uint256 tokenABalance = tokenB.balanceOf(arbitrager);
+        // uint256 tokenABalance = tokenA.balanceOf(arbitrager);
+        tokenB.approve(address(router), tokenABalance);
 
-        console.log("TokenA Balance: %s", tokenABalance);
+        console.log("tokenB Balance: %s", tokenABalance);
 
-        // Swap A -> D
-        path[0] = address(tokenA);
-        path[1] = address(tokenD);
 
-        router.swapExactTokensForTokens(tokenABalance, 0, path, address(this), block.timestamp + 120);
 
-        // Fetch the new balance and approve tokenD
-        uint256 tokenDBalance = tokenD.balanceOf(address(this));
-        tokenD.approve(address(router), tokenDBalance);
-
-        console.log("TokenD Balance: %s", tokenABalance);
-
-        // Swap D -> C
-        path[0] = address(tokenD);
-        path[1] = address(tokenC);
-        router.swapExactTokensForTokens(tokenDBalance, 0, path, address(this), block.timestamp + 120);
-
-        // Fetch the new balance and approve tokenC
-        uint256 tokenCBalance = tokenC.balanceOf(address(this));
-        tokenC.approve(address(router), tokenCBalance);
-
-        console.log("TokenC Balance: %s", tokenCBalance);
-
-        // Swap C -> B
-        path[0] = address(tokenC);
-        path[1] = address(tokenB);
-        router.swapExactTokensForTokens(tokenCBalance, 0, path, address(this), block.timestamp + 120);
-
-        // At this point, tokenB balance of this contract has increased.
-        // Transfer the tokenB balance from this contract back to the arbitrager.
-        uint256 finalTokenBBalance = tokenB.balanceOf(address(this));
-        tokenB.transfer(arbitrager, finalTokenBBalance);
-
-        
-
+        /**
+         * Please add your solution above
+         */
         uint256 tokensAfter = tokenB.balanceOf(arbitrager);
         assertGt(tokensAfter, 20 ether); // Ensure final tokenB balance is greater than 20 ether
         console.log("After Arbitrage tokenB Balance: %s", tokensAfter);
 
         vm.stopPrank();
     }
+
 
 
 
