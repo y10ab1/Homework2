@@ -6,11 +6,13 @@ Please complete the report problem below:
 Provide your profitable path, the amountIn, amountOut value for each swap, and your final reward (your tokenB balance).
 <!-- ### Solution: -->
 >Following is my profitable path:\
+\
 <font color="green"> Initial tokenB balance: 5</font>\
 <font color="green"> tokenB -> tokenA: 5.655321988655322</font>\
 <font color="green">- tokenA -> tokenD: 2.4587813170979333</font>\
 <font color="green">-- tokenD -> tokenC: 5.0889272933015155</font>\
 <font color="green">--- tokenC -> tokenB: 20.129888944077443</font>\
+\
 Path: tokenB->tokenA->tokenD->tokenC->tokenB, tokenB balance=20.129888944077443
 
 ## Problem 2
