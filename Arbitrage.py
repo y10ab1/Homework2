@@ -41,6 +41,7 @@ def find_max_path(current_token, amount, path, visited=set(), depth=0, max_depth
     for next_token in next_tokens:
         if next_token not in visited:  # Avoid cycles
             next_amount = swap(current_token, next_token, amount)
+            print(f"{'-' * depth} {current_token} -> {next_token}: {next_amount}")
             if next_amount > max_amount:  # Choose the swap that gives the maximum amount
                 next_path, final_amount = find_max_path(next_token, next_amount, path + [next_token], visited | {next_token}, depth + 1, max_depth)
                 if final_amount > max_amount:
