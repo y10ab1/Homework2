@@ -29,7 +29,7 @@ Please examine the mint function in the UniswapV2Pair contract. Upon initial liq
 ## Problem 4
 Investigate the minting function in the UniswapV2Pair contract. When depositing tokens (not for the first time), liquidity can only be obtained using a specific formula. What is the intention behind this?
 <!-- ### Solution: -->
->The liquidity minted when adding to an existing pool is proportional to the contributor's share. This maintains fair fee distribution and is calculated as `L = (Deposit Amount / Total Supply) * Total Liquidity Tokens`, keeping ownership percentages consistent.
+>The liquidity minted when adding to an existing pool is proportional to the contributor's share. This maintains fair fee distribution and is calculated as `L = min(amount0 / reserve0, amount1 / reserve1) * totalsupply`, keeping ownership percentages consistent.
 
 ## Problem 5
 What is a sandwich attack, and how might it impact you when initiating a swap?
